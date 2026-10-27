@@ -1,0 +1,14 @@
+﻿ID,Tipo,Requisito,Riesgo,Precondiciones,Entradas,Pasos,Esperado,Evidencia,Estado
+TC-01,Positivo,SEC-01,R-01,"Estudiante Ana, sesión activa; expediente 101=82",lab-ana / GET 101,Leer 101 con token de Ana,200; estudiante=ana; nota=82,UT TC01 / run1+run2,Aprobado
+TC-02,Negativo,SEC-01,R-01,Ana activa; expediente ajeno 202=91,lab-ana / GET 202,Guardar copia 202; consultar y comparar estado,403 sin nota; estado idéntico,UT TC02 / run1+run2,Aprobado
+TC-03,Negativo,SEC-02,R-02,María docente Central; 202 Pacífico=91,lab-maria / POST 202 nota=15,Guardar nota 202; intentar cambiar y comparar,403 sin nota; 202 conserva 91,UT TC03 / run1+run2,Aprobado
+TC-04,Negativo,SEC-03,R-03,Ana activa antes de revocar,revocar lab-ana; GET 101,Revocar sesión; solicitar expediente,401 sin nota; no entrega expediente,UT TC04 / API04 / run1+run2,Aprobado
+TC-05,Frontera,SEC-04,R-04,María docente Central; 101=82,lab-maria / POST 101 nota=-1,Anotar 82; enviar -1 y comprobar registro,400 sin nota; conserva 82,UT TC05 / run1+run2,Aprobado
+TC-06,Positivo,SEC-02,R-02,María docente Central; 101=82,lab-maria / POST 101 nota=85,Actualizar y revisar persistencia simulada,200; devuelve 85; persistido 85,UT TC06 / run1+run2,Aprobado
+TC-07,Positivo,SEC-05,R-06,Admin activo; expedientes 101 y 202,lab-admin / GET 101 y 202,Consultar ambos IDs,200 en ambos; IDs correctos,UT TC07 / run1+run2,Aprobado
+TC-08,Negativo,SEC-03,R-03,Sesión lab-vencida expirada,lab-vencida / GET 101,Consultar 101 con sesión expirada,401 sin nota,UT TC08 / API07 / run1+run2,Aprobado
+TC-09,Negativo,SEC-05,R-06,Admin activo; 101=82,lab-admin / POST 101 nota=99,Anotar 82; cambiar y comparar,403 sin nota; conserva 82,UT TC09 / API05 / run1+run2,Aprobado
+TC-10,Negativo,SEC-03,R-03,Sin sesión; 101 existe,sin Authorization / GET 101,Consultar 101 sin encabezado,401 sin nota,UT TC10 / API08 / run1+run2,Aprobado
+TC-11,Frontera,SEC-04,R-04,María activa; 101=82,lab-maria / POST 101 nota=100,Enviar valor superior permitido 100,200; se almacena 100,UT TC11 / run1+run2,Aprobado
+TC-12,Frontera,SEC-04,R-04,María activa; 101=82,lab-maria / POST 101 nota=101,Anotar 82; enviar 101 y comprobar,400 sin nota; conserva 82,UT TC12 / API03 / run1+run2,Aprobado
+EX-AUDIT,Adicional,SEC-06,R-05,Ana activa; registro sin secretos,lab-ana GET 202; lab-maria POST 101=90,Ejecutar rechazada y permitida; inspeccionar auditoría,"Se registra actor/acción/resultado, no token ni nota",UT EXTRA AUDIT / run1+run2,Aprobado

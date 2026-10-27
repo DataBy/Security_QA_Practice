@@ -1,0 +1,27 @@
+test_docente_actualiza_nota_en_su_sede (test_laboratorio.SeguridadExpedientes.test_docente_actualiza_nota_en_su_sede) ... ok
+test_estudiante_consulta_expediente_propio (test_laboratorio.SeguridadExpedientes.test_estudiante_consulta_expediente_propio) ... ok
+test_rojo_estudiante_no_consulta_expediente_ajeno (test_laboratorio.SeguridadExpedientes.test_rojo_estudiante_no_consulta_expediente_ajeno) ... FAIL
+test_rojo_sesion_revocada_no_permita_lecturas (test_laboratorio.SeguridadExpedientes.test_rojo_sesion_revocada_no_permita_lecturas) ... FAIL
+
+======================================================================
+FAIL: test_rojo_estudiante_no_consulta_expediente_ajeno (test_laboratorio.SeguridadExpedientes.test_rojo_estudiante_no_consulta_expediente_ajeno)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/work_security/laboratorio_seguridad/tests/test_laboratorio.py", line 22, in test_rojo_estudiante_no_consulta_expediente_ajeno
+    self.assertEqual(403, codigo)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+AssertionError: 403 != 200
+
+======================================================================
+FAIL: test_rojo_sesion_revocada_no_permita_lecturas (test_laboratorio.SeguridadExpedientes.test_rojo_sesion_revocada_no_permita_lecturas)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/work_security/laboratorio_seguridad/tests/test_laboratorio.py", line 29, in test_rojo_sesion_revocada_no_permita_lecturas
+    self.assertEqual(401, codigo)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+AssertionError: 401 != 200
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.001s
+
+FAILED (failures=2)

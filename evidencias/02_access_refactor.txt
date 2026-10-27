@@ -1,0 +1,6 @@
+test_rojo_estudiante_no_consulta_expediente_ajeno (tests.test_laboratorio.SeguridadExpedientes.test_rojo_estudiante_no_consulta_expediente_ajeno) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK

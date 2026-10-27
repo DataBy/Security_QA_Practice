@@ -1,0 +1,11 @@
+SeguridadExpedientes (unittest.loader._FailedTest.SeguridadExpedientes) ... ERROR
+
+======================================================================
+ERROR: SeguridadExpedientes (unittest.loader._FailedTest.SeguridadExpedientes)
+----------------------------------------------------------------------
+AttributeError: module 'tests.test_laboratorio' has no attribute 'SeguridadExpedientes'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)

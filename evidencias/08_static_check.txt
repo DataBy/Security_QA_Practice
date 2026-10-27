@@ -1,0 +1,10 @@
+Static baseline: compileall syntax check OK
+authorization_for_read: PASS
+authorization_for_update: PASS
+session_revoked_expired: PASS
+input_numeric_finite_0_100: PASS
+errors_no_grade: PASS
+audit_no_tokens: PASS
+loopback_only: PASS
+no_store_headers: PASS
+data_isolation: PASS

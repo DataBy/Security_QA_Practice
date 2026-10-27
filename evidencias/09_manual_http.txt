@@ -1,0 +1,25 @@
+Host: 127.0.0.1:8765; version: Python Python 3.13.5
+
+M-01 GET own expediente lab-ana -> 200
+{"id": "101", "estudiante": "ana", "sede": "Central", "nota": 82}
+HTTP 200
+
+M-02 GET cross-campus lab-maria -> 403 and no grade
+{"error": "Acceso denegado"}
+HTTP 403
+
+M-03 POST grade 101 -> 400 and no persistence
+{"error": "Nota inválida: use un número entre 0 y 100"}
+HTTP 400
+
+M-04 GET own grade after denied change -> original 82
+{"id": "101", "estudiante": "ana", "sede": "Central", "nota": 82}
+HTTP 200
+
+M-05 POST revoke lab-ana -> 200
+{"mensaje": "Sesión revocada"}
+HTTP 200
+
+M-06 GET revoked lab-ana -> 401 and no grade
+{"error": "Sesión inválida o vencida"}
+HTTP 401

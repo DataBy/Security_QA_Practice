@@ -1,0 +1,31 @@
+test_api_01_estudiante_propio_con_encabezados_seguros (test_api.PruebasAPI.test_api_01_estudiante_propio_con_encabezados_seguros) ... ok
+test_api_02_docente_lectura_entre_sedes_denegada (test_api.PruebasAPI.test_api_02_docente_lectura_entre_sedes_denegada) ... ok
+test_api_03_nota_invalida_no_persiste (test_api.PruebasAPI.test_api_03_nota_invalida_no_persiste) ... ok
+test_api_04_revocacion_bloquea_lectura (test_api.PruebasAPI.test_api_04_revocacion_bloquea_lectura) ... ok
+test_api_05_admin_no_modifica (test_api.PruebasAPI.test_api_05_admin_no_modifica) ... ok
+test_api_06_json_invalido_y_booleano (test_api.PruebasAPI.test_api_06_json_invalido_y_booleano) ... ok
+test_api_07_sesion_expirada_no_lee (test_api.PruebasAPI.test_api_07_sesion_expirada_no_lee) ... ok
+test_api_08_sin_token_no_lee (test_api.PruebasAPI.test_api_08_sin_token_no_lee) ... ok
+test_TC01_estudiante_lee_su_expediente (test_laboratorio.CasosDeSeguridad.test_TC01_estudiante_lee_su_expediente) ... ok
+test_TC02_estudiante_no_lee_expediente_ajeno_ni_nota (test_laboratorio.CasosDeSeguridad.test_TC02_estudiante_no_lee_expediente_ajeno_ni_nota) ... ok
+test_TC03_docente_no_modifica_nota_en_otra_sede (test_laboratorio.CasosDeSeguridad.test_TC03_docente_no_modifica_nota_en_otra_sede) ... ok
+test_TC04_sesion_revocada_no_lee (test_laboratorio.CasosDeSeguridad.test_TC04_sesion_revocada_no_lee) ... ok
+test_TC05_nota_menos_uno_no_se_guarda (test_laboratorio.CasosDeSeguridad.test_TC05_nota_menos_uno_no_se_guarda) ... ok
+test_TC06_docente_actualiza_su_sede (test_laboratorio.CasosDeSeguridad.test_TC06_docente_actualiza_su_sede) ... ok
+test_TC07_administrador_lee_ambas_sedes (test_laboratorio.CasosDeSeguridad.test_TC07_administrador_lee_ambas_sedes) ... ok
+test_TC08_sesion_expirada_no_lee (test_laboratorio.CasosDeSeguridad.test_TC08_sesion_expirada_no_lee) ... ok
+test_TC09_administrador_no_modifica_nota (test_laboratorio.CasosDeSeguridad.test_TC09_administrador_no_modifica_nota) ... ok
+test_TC10_sin_token_no_lee (test_laboratorio.CasosDeSeguridad.test_TC10_sin_token_no_lee) ... ok
+test_TC11_nota_cien_es_valida (test_laboratorio.CasosDeSeguridad.test_TC11_nota_cien_es_valida) ... ok
+test_TC12_nota_ciento_uno_no_se_guarda (test_laboratorio.CasosDeSeguridad.test_TC12_nota_ciento_uno_no_se_guarda) ... ok
+test_extra_auditoria_sin_token_ni_nota (test_laboratorio.CasosDeSeguridad.test_extra_auditoria_sin_token_ni_nota) ... ok
+test_extra_bool_nan_inf_cadena_rechazados (test_laboratorio.CasosDeSeguridad.test_extra_bool_nan_inf_cadena_rechazados) ... ok
+test_extra_docente_no_lee_otra_sede (test_laboratorio.CasosDeSeguridad.test_extra_docente_no_lee_otra_sede) ... ok
+test_extra_estudiante_no_modifica_nota (test_laboratorio.CasosDeSeguridad.test_extra_estudiante_no_modifica_nota) ... ok
+test_extra_nota_cero_es_valida (test_laboratorio.CasosDeSeguridad.test_extra_nota_cero_es_valida) ... ok
+test_extra_sesion_revocada_no_modifica_nota (test_laboratorio.CasosDeSeguridad.test_extra_sesion_revocada_no_modifica_nota) ... ok
+
+----------------------------------------------------------------------
+Ran 26 tests in 4.036s
+
+OK

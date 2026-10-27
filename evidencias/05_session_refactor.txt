@@ -1,0 +1,6 @@
+test_rojo_sesion_revocada_no_permita_lecturas (tests.test_laboratorio.SeguridadExpedientes.test_rojo_sesion_revocada_no_permita_lecturas) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK

@@ -1,0 +1,5 @@
+H-01 student reads other grade: HTTP/logical status=200; response_keys=['estudiante', 'id', 'nota', 'sede']; grade_101=82; grade_202=91; audit_contains_token_key=True
+H-02 revoked session reused: HTTP/logical status=200; response_keys=['estudiante', 'id', 'nota', 'sede']; grade_101=82; grade_202=91; audit_contains_token_key=True
+H-03 teacher changes another campus: HTTP/logical status=200; response_keys=['estudiante', 'id', 'nota', 'sede']; grade_101=82; grade_202=15; audit_contains_token_key=True
+H-04 out-of-range 101 accepted: HTTP/logical status=200; response_keys=['estudiante', 'id', 'nota', 'sede']; grade_101=101; grade_202=91; audit_contains_token_key=True
+H-05 synthetic bearer token stored in audit: HTTP/logical status=200; response_keys=['estudiante', 'id', 'nota', 'sede']; grade_101=82; grade_202=91; audit_contains_token_key=True
