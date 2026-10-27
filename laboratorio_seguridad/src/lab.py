@@ -1,7 +1,6 @@
-"""Laboratorio didáctico: contiene fallas INTENCIONALES que deben identificarse.
+"""Motor didáctico de expedientes y sesiones sintéticas. No apto para producción."""
 
-No se debe reutilizar este código en producción. No realiza autenticación real.
-"""
+import math
 
 USUARIOS = {
     "ana": {"id": "ana", "rol": "estudiante", "sede": "Central"},
@@ -13,29 +12,26 @@ USUARIOS = {
 
 
 def estado_inicial():
-    """Crea datos de laboratorio independientes para cada ejecución."""
     return {
         "expedientes": {
             "101": {"id": "101", "estudiante": "ana", "sede": "Central", "nota": 82},
             "202": {"id": "202", "estudiante": "luis", "sede": "Pacifico", "nota": 91},
         },
         "sesiones": {
-            f"lab-{id_usuario}": {"usuario": id_usuario, "revocada": False, "expirada": False}
-            for id_usuario in USUARIOS
+            f"lab-{identificador}": {"usuario": identificador, "revocada": False, "expirada": False}
+            for identificador in USUARIOS
         } | {"lab-vencida": {"usuario": "ana", "revocada": False, "expirada": True}},
         "auditoria": [],
     }
 
 
 def _sesion_activa(sesion):
-    return sesion is not None and not sesion["revocada"] and not sesion["expirada"]
+    return bool(sesion) and not sesion["revocada"] and not sesion["expirada"]
 
 
 def autenticar(estado, token):
-    sesion = estado["sesiones"].get(token)
-    if not _sesion_activa(sesion):
-        return None
-    return USUARIOS.get(sesion["usuario"])
+    sesion = estado["sesiones"].get(token) if isinstance(token, str) else None
+    return USUARIOS.get(sesion["usuario"]) if _sesion_activa(sesion) else None
 
 
 def _puede_leer(usuario, expediente):
@@ -46,39 +42,64 @@ def _puede_leer(usuario, expediente):
     return usuario["rol"] == "administrador"
 
 
+def _puede_cambiar(usuario, expediente):
+    return usuario["rol"] == "docente" and expediente["sede"] == usuario["sede"]
+
+
+def _nota_valida(nota):
+    return type(nota) in (int, float) and math.isfinite(nota) and 0 <= nota <= 100
+
+
+def _auditar(estado, usuario, accion, recurso, resultado):
+    estado["auditoria"].append({
+        "actor": usuario["id"] if usuario else "desconocido",
+        "accion": accion,
+        "recurso": str(recurso),
+        "resultado": resultado,
+    })
+
+
 def leer_expediente(estado, token, expediente_id):
     usuario = autenticar(estado, token)
     if usuario is None:
-        return 401, {"error": "No autenticado"}
+        _auditar(estado, None, "lectura", expediente_id, "rechazado")
+        return 401, {"error": "Sesión inválida o vencida"}
     expediente = estado["expedientes"].get(expediente_id)
     if expediente is None:
-        return 404, {"error": "No existe"}
+        _auditar(estado, usuario, "lectura", expediente_id, "no_encontrado")
+        return 404, {"error": "Recurso no disponible"}
     if not _puede_leer(usuario, expediente):
+        _auditar(estado, usuario, "lectura", expediente_id, "rechazado")
         return 403, {"error": "Acceso denegado"}
-    estado["auditoria"].append({"accion": "lectura", "actor": usuario["id"], "id": expediente_id})
+    _auditar(estado, usuario, "lectura", expediente_id, "permitido")
     return 200, dict(expediente)
 
 
 def actualizar_nota(estado, token, expediente_id, nota):
     usuario = autenticar(estado, token)
     if usuario is None:
-        return 401, {"error": "No autenticado"}
+        _auditar(estado, None, "actualizacion", expediente_id, "rechazado")
+        return 401, {"error": "Sesión inválida o vencida"}
     expediente = estado["expedientes"].get(expediente_id)
     if expediente is None:
-        return 404, {"error": "No existe"}
-    if usuario["rol"] != "docente":
-        return 403, {"error": "Operación denegada"}
-    if not isinstance(nota, (int, float)):
-        return 400, {"error": "Nota inválida"}
-    # TODO SEC-02/SEC-04: inspeccionar la sede y los valores de frontera.
+        _auditar(estado, usuario, "actualizacion", expediente_id, "no_encontrado")
+        return 404, {"error": "Recurso no disponible"}
+    if not _puede_cambiar(usuario, expediente):
+        _auditar(estado, usuario, "actualizacion", expediente_id, "rechazado")
+        return 403, {"error": "Acceso denegado"}
+    if not _nota_valida(nota):
+        _auditar(estado, usuario, "actualizacion", expediente_id, "invalido")
+        return 400, {"error": "Nota inválida: use un número entre 0 y 100"}
     expediente["nota"] = nota
-    estado["auditoria"].append({"accion": "actualizacion", "token": token, "id": expediente_id})
+    _auditar(estado, usuario, "actualizacion", expediente_id, "permitido")
     return 200, dict(expediente)
 
 
 def revocar_sesion(estado, token):
-    sesion = estado["sesiones"].get(token)
-    if sesion is None:
-        return 401, {"error": "No autenticado"}
-    sesion["revocada"] = True
+    usuario = autenticar(estado, token)
+    if usuario is None:
+        _auditar(estado, None, "revocacion", "sesion", "rechazado")
+        return 401, {"error": "Sesión inválida o vencida"}
+    estado["sesiones"][token]["revocada"] = True
+    _auditar(estado, usuario, "revocacion", "sesion", "permitido")
     return 200, {"mensaje": "Sesión revocada"}
