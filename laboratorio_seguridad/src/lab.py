@@ -43,8 +43,11 @@ def leer_expediente(estado, token, expediente_id):
     expediente = estado["expedientes"].get(expediente_id)
     if expediente is None:
         return 404, {"error": "No existe"}
-    # TODO SEC-01: identificar la política de autorización correcta.
-    estado["auditoria"].append({"accion": "lectura", "token": token, "id": expediente_id})
+    if usuario["rol"] == "estudiante" and expediente["estudiante"] != usuario["id"]:
+        return 403, {"error": "Acceso denegado"}
+    if usuario["rol"] == "docente" and expediente["sede"] != usuario["sede"]:
+        return 403, {"error": "Acceso denegado"}
+    estado["auditoria"].append({"accion": "lectura", "actor": usuario["id"], "id": expediente_id})
     return 200, dict(expediente)
 
 
