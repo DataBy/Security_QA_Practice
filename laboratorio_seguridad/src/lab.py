@@ -47,7 +47,7 @@ def _puede_cambiar(usuario, expediente):
 
 
 def _nota_valida(nota):
-    return type(nota) in (int, float) and math.isfinite(nota) and 0 <= nota <= 100
+    return type(nota) in (int, float) and 0 <= nota <= 100 and (type(nota) is int or math.isfinite(nota))
 
 
 def _auditar(estado, usuario, accion, recurso, resultado):
