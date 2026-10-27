@@ -27,14 +27,15 @@ def estado_inicial():
     }
 
 
+def _sesion_activa(sesion):
+    return sesion is not None and not sesion["revocada"] and not sesion["expirada"]
+
+
 def autenticar(estado, token):
-    """Recibe tokens SINTETICOS; no implementa autenticación de producción."""
     sesion = estado["sesiones"].get(token)
-    if sesion is None:
+    if not _sesion_activa(sesion):
         return None
-    if sesion["revocada"] or sesion["expirada"]:
-        return None
-    return USUARIOS[sesion["usuario"]]
+    return USUARIOS.get(sesion["usuario"])
 
 
 def _puede_leer(usuario, expediente):
